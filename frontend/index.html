@@ -6,54 +6,54 @@
     <title>FBR Procurement Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-    </style>
 </head>
-<body class="bg-slate-50 font-sans">
+<body class="bg-slate-50">
     <div class="max-w-screen-2xl mx-auto">
         <!-- Header -->
-        <div class="bg-teal-700 text-white p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="text-3xl">📦</div>
-                    <div>
-                        <h1 class="text-3xl font-bold">FBR Procurement Tracker</h1>
-                        <p class="text-teal-100">World Bank • ADB • GoP Compliance</p>
-                    </div>
+        <div class="bg-teal-700 text-white px-8 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <span class="text-4xl">📦</span>
+                <div>
+                    <h1 class="text-3xl font-bold">FBR Procurement Tracker</h1>
+                    <p class="text-teal-200 text-sm">World Bank • ADB • GoP Compliance</p>
                 </div>
-                <div class="text-sm">Nasir Ali Kazmi • Procurement Specialist</div>
+            </div>
+            <div class="text-right">
+                <div class="font-medium">Nasir Ali Kazmi</div>
+                <div class="text-xs text-teal-200">Procurement Specialist</div>
             </div>
         </div>
 
-        <!-- Tabs -->
-        <div class="border-b bg-white sticky top-0 z-10">
+        <!-- Navigation -->
+        <div class="bg-white border-b sticky top-0 z-50">
             <div class="flex px-8">
-                <button onclick="switchTab(0)" class="tab-btn active px-8 py-4 border-b-4 border-teal-600 text-teal-700 font-medium">Dashboard</button>
-                <button onclick="switchTab(1)" class="tab-btn px-8 py-4 text-slate-600 hover:text-slate-800">Activities</button>
-                <button onclick="switchTab(2)" class="tab-btn px-8 py-4 text-slate-600 hover:text-slate-800">Deliverables</button>
-                <button onclick="switchTab(3)" class="tab-btn px-8 py-4 text-slate-600 hover:text-slate-800">Reports</button>
+                <button onclick="switchTab(0)" class="tab active px-8 py-4 text-teal-700 border-b-4 border-teal-600 font-medium">Dashboard</button>
+                <button onclick="switchTab(1)" class="tab px-8 py-4 text-slate-600 hover:text-teal-700">Activities</button>
+                <button onclick="switchTab(2)" class="tab px-8 py-4 text-slate-600 hover:text-teal-700">Deliverables</button>
+                <button onclick="switchTab(3)" class="tab px-8 py-4 text-slate-600 hover:text-teal-700">Reports</button>
             </div>
         </div>
 
-        <!-- Dashboard Tab -->
-        <div id="tab-0" class="tab-content active p-8">
+        <!-- Tabs Content -->
+        <div id="tab-0" class="tab-content p-8">
             <h2 class="text-2xl font-semibold mb-6">Dashboard Overview</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-3xl shadow">
                     <p class="text-slate-500">Total Activities</p>
-                    <p class="text-5xl font-bold text-teal-700 mt-2" id="total-activities">2</p>
+                    <p class="text-6xl font-bold text-teal-700 mt-2" id="total-activities">2</p>
                 </div>
                 <div class="bg-white p-6 rounded-3xl shadow">
                     <p class="text-slate-500">Deliverables</p>
-                    <p class="text-5xl font-bold text-amber-600 mt-2">0</p>
+                    <p class="text-6xl font-bold text-amber-600 mt-2">0</p>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow">
+                    <p class="text-slate-500">Avg Cycle Time</p>
+                    <p class="text-6xl font-bold text-slate-700 mt-2">87 <span class="text-base">days</span></p>
                 </div>
             </div>
         </div>
 
-        <!-- Activities Tab -->
-        <div id="tab-1" class="tab-content p-8">
+        <div id="tab-1" class="tab-content hidden p-8">
             <h2 class="text-2xl font-semibold mb-4">Procurement Activities</h2>
             <div class="bg-white rounded-3xl shadow overflow-hidden">
                 <table class="w-full" id="activities-table">
@@ -64,33 +64,31 @@
                             <th class="px-6 py-4 text-left">Wing</th>
                             <th class="px-6 py-4 text-left">Type</th>
                             <th class="px-6 py-4 text-left">Status</th>
-                            <th class="px-6 py-4 text-left">Contract Date</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y" id="activities-body"></tbody>
+                    <tbody id="activities-body" class="divide-y"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Reports Tab -->
-        <div id="tab-3" class="tab-content p-8">
+        <div id="tab-3" class="tab-content hidden p-8">
             <h2 class="text-2xl font-semibold mb-6">Procurement Reports</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div onclick="alert('ADB Quarterly Report - Coming Soon')" class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer transition">
-                    <h3 class="font-semibold text-lg">ADB Quarterly Progress</h3>
-                    <p class="text-slate-500 mt-2">Physical & Financial Progress Report</p>
+                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer" onclick="alert('ADB Quarterly Report - Coming Soon')">
+                    <h3 class="font-semibold">ADB Quarterly Progress</h3>
+                    <p class="text-slate-500 mt-2 text-sm">Physical & Financial Progress</p>
                 </div>
-                <div onclick="alert('WB Contract Award Report - Coming Soon')" class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer transition">
-                    <h3 class="font-semibold text-lg">WB Contract Awards</h3>
-                    <p class="text-slate-500 mt-2">Award Summary & Publication Status</p>
+                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer" onclick="alert('WB Contract Awards - Coming Soon')">
+                    <h3 class="font-semibold">WB Contract Awards</h3>
+                    <p class="text-slate-500 mt-2 text-sm">Award Summary</p>
                 </div>
-                <div onclick="alert('Value for Money Report - Coming Soon')" class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer transition">
-                    <h3 class="font-semibold text-lg">Value for Money (VfM)</h3>
-                    <p class="text-slate-500 mt-2">Savings Analysis</p>
+                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer" onclick="alert('Value for Money - Coming Soon')">
+                    <h3 class="font-semibold">Value for Money</h3>
+                    <p class="text-slate-500 mt-2 text-sm">Savings Analysis</p>
                 </div>
-                <div onclick="alert('PPRA Compliance Report - Coming Soon')" class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer transition">
-                    <h3 class="font-semibold text-lg">PPRA Compliance</h3>
-                    <p class="text-slate-500 mt-2">Regulatory Compliance</p>
+                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer" onclick="alert('PPRA Compliance - Coming Soon')">
+                    <h3 class="font-semibold">PPRA Compliance</h3>
+                    <p class="text-slate-500 mt-2 text-sm">Regulatory Report</p>
                 </div>
             </div>
         </div>
@@ -98,40 +96,31 @@
 
     <script>
         async function loadActivities() {
-            try {
-                const res = await fetch('/api/activities');
-                const data = await res.json();
-                const tbody = document.getElementById('activities-body');
-                tbody.innerHTML = '';
-                data.forEach(act => {
-                    const row = document.createElement('tr');
-                    row.className = 'hover:bg-slate-50';
-                    row.innerHTML = `
-                        <td class="px-6 py-4 font-mono">${act.activity_no}</td>
-                        <td class="px-6 py-4">${act.title}</td>
-                        <td class="px-6 py-4">${act.wing}</td>
-                        <td class="px-6 py-4">${act.type}</td>
-                        <td class="px-6 py-4">${act.status}</td>
-                        <td class="px-6 py-4">${act.contract_date || 'N/A'}</td>
-                    `;
-                    tbody.appendChild(row);
-                });
-            } catch(e) {
-                console.error(e);
-            }
+            const res = await fetch('/api/activities');
+            const data = await res.json();
+            const tbody = document.getElementById('activities-body');
+            tbody.innerHTML = '';
+            data.forEach(act => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50";
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-mono text-teal-700">${act.activity_no}</td>
+                    <td class="px-6 py-4">${act.title}</td>
+                    <td class="px-6 py-4">${act.wing}</td>
+                    <td class="px-6 py-4">${act.type}</td>
+                    <td class="px-6 py-4"><span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs">${act.status}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
         function switchTab(n) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.getElementById('tab-' + n).classList.add('active');
-            
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + n).classList.remove('hidden');
             if (n === 1) loadActivities();
         }
 
-        // Initialize
-        window.onload = () => {
-            switchTab(0);
-        };
+        window.onload = () => switchTab(0);
     </script>
 </body>
 </html>
