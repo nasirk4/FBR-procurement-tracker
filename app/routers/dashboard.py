@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.models import ProcurementActivity, ContractDeliverable
 from app.dependencies import get_db
 
-router = APIRouter()
+router = APIRouter(redirect_slashes=False)
 
 @router.get("/stats")
 def get_dashboard_stats(db: Session = Depends(get_db)):

@@ -6,15 +6,20 @@
     <title>FBR Procurement Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-btn.active { border-bottom: 4px solid #0f766e; color: #0f766e; font-weight: 600; }
+    </style>
 </head>
 <body class="bg-slate-50">
     <div class="max-w-screen-2xl mx-auto">
         <!-- Header -->
-        <div class="bg-teal-700 text-white px-8 py-5 flex items-center justify-between">
+        <div class="bg-teal-700 text-white px-8 py-6 flex items-center justify-between">
             <div class="flex items-center gap-4">
                 <span class="text-4xl">📦</span>
                 <div>
-                    <h1 class="text-3xl font-bold">FBR Procurement Tracker</h1>
+                    <h1 class="text-3xl font-bold tracking-tight">FBR Procurement Tracker</h1>
                     <p class="text-teal-200 text-sm">World Bank • ADB • GoP Compliance</p>
                 </div>
             </div>
@@ -24,46 +29,54 @@
             </div>
         </div>
 
-        <!-- Navigation -->
+        <!-- Tabs -->
         <div class="bg-white border-b sticky top-0 z-50">
-            <div class="flex px-8">
-                <button onclick="switchTab(0)" class="tab active px-8 py-4 text-teal-700 border-b-4 border-teal-600 font-medium">Dashboard</button>
-                <button onclick="switchTab(1)" class="tab px-8 py-4 text-slate-600 hover:text-teal-700">Activities</button>
-                <button onclick="switchTab(2)" class="tab px-8 py-4 text-slate-600 hover:text-teal-700">Deliverables</button>
-                <button onclick="switchTab(3)" class="tab px-8 py-4 text-slate-600 hover:text-teal-700">Reports</button>
+            <div class="flex px-8 text-sm">
+                <button onclick="switchTab(0)" class="tab-btn active px-8 py-4">Dashboard</button>
+                <button onclick="switchTab(1)" class="tab-btn px-8 py-4">Activities</button>
+                <button onclick="switchTab(2)" class="tab-btn px-8 py-4">Deliverables</button>
+                <button onclick="switchTab(3)" class="tab-btn px-8 py-4">Reports</button>
             </div>
         </div>
 
-        <!-- Tabs Content -->
-        <div id="tab-0" class="tab-content p-8">
+        <!-- Dashboard Tab -->
+        <div id="tab-0" class="tab-content active p-8">
             <h2 class="text-2xl font-semibold mb-6">Dashboard Overview</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-3xl shadow">
-                    <p class="text-slate-500">Total Activities</p>
-                    <p class="text-6xl font-bold text-teal-700 mt-2" id="total-activities">2</p>
+                    <p class="text-slate-500 text-sm">Total Activities</p>
+                    <p class="text-6xl font-bold text-teal-700 mt-2" id="total-activities">--</p>
                 </div>
                 <div class="bg-white p-6 rounded-3xl shadow">
-                    <p class="text-slate-500">Deliverables</p>
-                    <p class="text-6xl font-bold text-amber-600 mt-2">0</p>
+                    <p class="text-slate-500 text-sm">Deliverables</p>
+                    <p class="text-6xl font-bold text-amber-600 mt-2" id="total-deliverables">--</p>
                 </div>
                 <div class="bg-white p-6 rounded-3xl shadow">
-                    <p class="text-slate-500">Avg Cycle Time</p>
-                    <p class="text-6xl font-bold text-slate-700 mt-2">87 <span class="text-base">days</span></p>
+                    <p class="text-slate-500 text-sm">Avg. Cycle Time</p>
+                    <p class="text-6xl font-bold text-slate-700 mt-2">87 <span class="text-base font-normal">days</span></p>
                 </div>
             </div>
         </div>
 
+        <!-- Activities Tab -->
         <div id="tab-1" class="tab-content hidden p-8">
-            <h2 class="text-2xl font-semibold mb-4">Procurement Activities</h2>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold">Procurement Activities</h2>
+                <input type="text" id="search-input" 
+                       onkeyup="filterTable()" 
+                       placeholder="Search activities..." 
+                       class="border border-slate-300 rounded-3xl px-5 py-3 w-80 focus:outline-none focus:border-teal-500">
+            </div>
             <div class="bg-white rounded-3xl shadow overflow-hidden">
-                <table class="w-full" id="activities-table">
+                <table class="w-full">
                     <thead class="bg-slate-100">
                         <tr>
                             <th class="px-6 py-4 text-left">Activity No</th>
-                            <th class="px-6 py-4 text-left">Title</th>
+                            <th class="px-6 py-4 text-left w-2/5">Title</th>
                             <th class="px-6 py-4 text-left">Wing</th>
                             <th class="px-6 py-4 text-left">Type</th>
                             <th class="px-6 py-4 text-left">Status</th>
+                            <th class="px-6 py-4 text-left">Contract Date</th>
                         </tr>
                     </thead>
                     <tbody id="activities-body" class="divide-y"></tbody>
@@ -71,53 +84,146 @@
             </div>
         </div>
 
+        <!-- Deliverables Tab -->
+        <div id="tab-2" class="tab-content hidden p-8">
+            <h2 class="text-2xl font-semibold mb-6">Contract Deliverables</h2>
+            <div class="bg-white rounded-3xl shadow overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-slate-100">
+                        <tr>
+                            <th class="px-6 py-4 text-left">Contract No</th>
+                            <th class="px-6 py-4 text-left">Deliverable</th>
+                            <th class="px-6 py-4 text-left">Due Date</th>
+                            <th class="px-6 py-4 text-left">Actual Submission</th>
+                            <th class="px-6 py-4 text-left">Approval Date</th>
+                            <th class="px-6 py-4 text-left">Payment Due</th>
+                            <th class="px-6 py-4 text-left">Payment Released</th>
+                            <th class="px-6 py-4 text-left">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="deliverables-body" class="divide-y"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
         <div id="tab-3" class="tab-content hidden p-8">
-            <h2 class="text-2xl font-semibold mb-6">Procurement Reports</h2>
+            <h2 class="text-2xl font-semibold mb-8">Procurement Reports</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer" onclick="alert('ADB Quarterly Report - Coming Soon')">
-                    <h3 class="font-semibold">ADB Quarterly Progress</h3>
-                    <p class="text-slate-500 mt-2 text-sm">Physical & Financial Progress</p>
+                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer transition" onclick="alert('ADB Quarterly Report - Coming Soon')">
+                    <h3 class="font-semibold text-lg">ADB Quarterly Progress</h3>
+                    <p class="text-slate-500 mt-3">Physical & Financial Progress Report</p>
                 </div>
-                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer" onclick="alert('WB Contract Awards - Coming Soon')">
-                    <h3 class="font-semibold">WB Contract Awards</h3>
-                    <p class="text-slate-500 mt-2 text-sm">Award Summary</p>
+                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer transition" onclick="alert('WB Contract Awards - Coming Soon')">
+                    <h3 class="font-semibold text-lg">WB Contract Award Summary</h3>
+                    <p class="text-slate-500 mt-3">Awarded Contracts & Publication Status</p>
                 </div>
-                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer" onclick="alert('Value for Money - Coming Soon')">
-                    <h3 class="font-semibold">Value for Money</h3>
-                    <p class="text-slate-500 mt-2 text-sm">Savings Analysis</p>
+                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer transition" onclick="alert('Value for Money Analysis - Coming Soon')">
+                    <h3 class="font-semibold text-lg">Value for Money (VfM)</h3>
+                    <p class="text-slate-500 mt-3">Savings & Cost Efficiency</p>
                 </div>
-                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer" onclick="alert('PPRA Compliance - Coming Soon')">
-                    <h3 class="font-semibold">PPRA Compliance</h3>
-                    <p class="text-slate-500 mt-2 text-sm">Regulatory Report</p>
+                <div class="bg-white p-8 rounded-3xl shadow hover:shadow-lg cursor-pointer transition" onclick="alert('PPRA Compliance Report - Coming Soon')">
+                    <h3 class="font-semibold text-lg">PPRA Compliance</h3>
+                    <p class="text-slate-500 mt-3">Regulatory & Transparency Report</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        async function fetchJSON(url) {
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return await res.json();
+            } catch (err) {
+                console.error(`Failed to fetch ${url}:`, err);
+                return null;
+            }
+        }
+
+        async function loadDashboard() {
+            const stats = await fetchJSON('/api/dashboard/stats');
+            if (stats) {
+                document.getElementById('total-activities').innerText = stats.total_activities || 0;
+                document.getElementById('total-deliverables').innerText = stats.total_deliverables || 0;
+            }
+        }
+
         async function loadActivities() {
-            const res = await fetch('/api/activities');
-            const data = await res.json();
+            const activities = await fetchJSON('/api/activities');
+            if (!activities) return;
             const tbody = document.getElementById('activities-body');
             tbody.innerHTML = '';
-            data.forEach(act => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50";
-                tr.innerHTML = `
-                    <td class="px-6 py-4 font-mono text-teal-700">${act.activity_no}</td>
-                    <td class="px-6 py-4">${act.title}</td>
-                    <td class="px-6 py-4">${act.wing}</td>
-                    <td class="px-6 py-4">${act.type}</td>
-                    <td class="px-6 py-4"><span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs">${act.status}</span></td>
+            activities.forEach(act => {
+                const row = tbody.insertRow();
+                row.className = 'hover:bg-slate-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-mono text-teal-700">${escapeHtml(act.activity_no)}</td>
+                    <td class="px-6 py-4">${escapeHtml(act.title)}</td>
+                    <td class="px-6 py-4">${escapeHtml(act.wing)}</td>
+                    <td class="px-6 py-4">${escapeHtml(act.type)}</td>
+                    <td class="px-6 py-4"><span class="px-4 py-1 text-xs font-medium rounded-full bg-emerald-100 text-emerald-700">${escapeHtml(act.status)}</span></td>
+                    <td class="px-6 py-4">${act.contract_date || 'N/A'}</td>
                 `;
-                tbody.appendChild(tr);
             });
         }
 
-        function switchTab(n) {
+        async function loadDeliverables() {
+            const deliverables = await fetchJSON('/api/deliverables');
+            if (!deliverables) return;
+            const tbody = document.getElementById('deliverables-body');
+            tbody.innerHTML = '';
+            deliverables.forEach(d => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td class="px-6 py-4">${escapeHtml(d.contract_number)}</td>
+                    <td class="px-6 py-4">${escapeHtml(d.deliverable_name)}</td>
+                    <td class="px-6 py-4">${d.due_date || 'N/A'}</td>
+                    <td class="px-6 py-4">${d.actual_submission_date || 'N/A'}</td>
+                    <td class="px-6 py-4">${d.approval_date || 'N/A'}</td>
+                    <td class="px-6 py-4">${d.payment_due ? `$${d.payment_due}` : 'N/A'}</td>
+                    <td class="px-6 py-4">${d.payment_released ? `$${d.payment_released}` : 'N/A'}</td>
+                    <td class="px-6 py-4"><span class="px-3 py-1 text-xs rounded-full ${d.status === 'Complete' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">${d.status}</span></td>
+                `;
+            });
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function filterTable() {
+            const term = document.getElementById('search-input').value.toLowerCase();
+            const rows = document.querySelectorAll('#activities-body tr');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(term) ? '' : 'none';
+            });
+        }
+
+        async function switchTab(n) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('tab-' + n).classList.remove('hidden');
-            if (n === 1) loadActivities();
+            const activeTab = document.getElementById(`tab-${n}`);
+            activeTab.classList.remove('hidden');
+            activeTab.classList.add('active');
+
+            // Update button styles
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-btn')[n].classList.add('active');
+
+            // Load data on demand
+            if (n === 0) await loadDashboard();
+            if (n === 1) await loadActivities();
+            if (n === 2) await loadDeliverables();
         }
 
         window.onload = () => switchTab(0);

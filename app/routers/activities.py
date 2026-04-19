@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.models import ProcurementActivity
 from app.dependencies import get_db
 
-router = APIRouter()
+router = APIRouter(redirect_slashes=False)
 
-@router.get("/")
+@router.get("")
 def get_activities(db: Session = Depends(get_db), skip: int = 0, limit: int = 100):
     activities = db.query(ProcurementActivity).offset(skip).limit(limit).all()
     return activities

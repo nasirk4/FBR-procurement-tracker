@@ -4,7 +4,7 @@ from app.models import ContractDeliverable, ProcurementActivity
 from datetime import date
 from app.dependencies import get_db
 
-router = APIRouter()
+router = APIRouter(redirect_slashes=False)
 
 def validate_deliverable_dates(db: Session, deliverable_data: dict, contract_number: str):
     activity = db.query(ProcurementActivity).filter(ProcurementActivity.activity_no == contract_number).first()
@@ -24,7 +24,7 @@ def validate_deliverable_dates(db: Session, deliverable_data: dict, contract_num
     
     return True
 
-@router.get("/")
+@router.get("")
 def get_all_deliverables(db: Session = Depends(get_db)):
     return db.query(ContractDeliverable).all()
 
