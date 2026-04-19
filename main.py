@@ -1,4 +1,5 @@
-from fastapi import FastAPI, RedirectResponse
+from fastapi import FastAPI
+from starlette.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from app.routers import activities, deliverables, dashboard, reports
 from app.models import Base
