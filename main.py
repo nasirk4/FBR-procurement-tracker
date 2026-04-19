@@ -1,16 +1,15 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, RedirectResponse
 from app.routers import activities, deliverables, dashboard, reports
 from app.models import Base
 from app.dependencies import engine
 
 app = FastAPI(title="FBR Procurement Tracker")
 
-# Mount frontend
-app.mount("/frontend", StaticFiles(directory="frontend", html=True), name="frontend")
+# Serve frontend static files
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
-# Include API routers
+# API Routers
 app.include_router(activities.router, prefix="/api/activities", tags=["activities"])
 app.include_router(deliverables.router, prefix="/api/deliverables", tags=["deliverables"])
 app.include_router(dashboard.router, prefix="/api/dashboard", tags=["dashboard"])
@@ -20,10 +19,10 @@ app.include_router(reports.router, prefix="/api/reports", tags=["reports"])
 async def health():
     return {"status": "ok", "message": "FBR Procurement Tracker is running"}
 
-# Root → redirect to frontend
+# Root route - serve frontend
 @app.get("/")
 async def root():
-    return RedirectResponse(url="/frontend/index.html")
+    return RedirectResponse(url="/static/index.html")
 
 @app.on_event("startup")
 def startup_event():
