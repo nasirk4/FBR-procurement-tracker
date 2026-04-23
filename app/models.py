@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, DateTime, JSON, ForeignKey, Numeric, Text
+from sqlalchemy import Column, Integer, String, Date, DateTime, JSON, ForeignKey, Numeric, Text, Float
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
@@ -20,6 +20,7 @@ class ProcurementActivity(Base):
     milestones = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, onupdate=datetime.utcnow)
+    contract_value = Column(Numeric(12,2), nullable=True)   # actual signed contract value
 
 class ContractDeliverable(Base):
     __tablename__ = "contract_deliverables"
@@ -44,3 +45,30 @@ class AuditLog(Base):
     old_values = Column(JSON, nullable=True)
     new_values = Column(JSON, nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
+
+class Utilization(Base):
+    __tablename__ = "utilization"
+    id = Column(Integer, primary_key=True, index=True)
+    year = Column(Integer, nullable=False)
+    quarter = Column(Integer, nullable=False)  # 1,2,3,4
+    percentage = Column(Numeric(5,2), nullable=False)  # e.g., 85.50
+    resources_used = Column(String, nullable=True)    # optional description
+    notes = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class ProcurementPlan(Base):
+    __tablename__ = "procurement_plans"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    reference_no = Column(String, nullable=True)
+    category = Column(String, nullable=True)
+    amount_usd = Column(Float, nullable=True)
+    method = Column(String, nullable=True)
+    wing = Column(String, nullable=True)
+    planned_start = Column(Date, nullable=True)
+    planned_end = Column(Date, nullable=True)
+    
+
+    def __repr__(self):
+        return f"<ProcurementPlan {self.name}>"
