@@ -3,7 +3,7 @@ from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from app.models import Base
 from app.dependencies import engine
-from app.routers import activities, deliverables, dashboard, reports, utilization, dashboard_advanced, plans
+from app.routers import activities, deliverables, dashboard, reports, utilization, dashboard_advanced, plans, settings
 
 app = FastAPI(title="FBR Procurement Activity Tracker")
 
@@ -28,6 +28,9 @@ app.include_router(reports.router, prefix="/api/reports", tags=["reports"])
 app.include_router(utilization.router, prefix="/api/utilization", tags=["utilization"])
 app.include_router(dashboard_advanced.router, prefix="/api/dashboard", tags=["dashboard"])
 app.include_router(plans.router, prefix="/api", tags=["plans"])
+app.include_router(settings.router, prefix="/api/settings", tags=["settings"])
+
+
 
 @app.get("/api/health")
 async def health():

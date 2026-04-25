@@ -29,13 +29,25 @@ class DeliverableCreate(BaseModel):
 class UtilizationCreate(BaseModel):
     year: int
     quarter: int
-    percentage: float
-    resources_used: Optional[str] = None
+    #funds_released: float
+    funds_utilized: float
     notes: Optional[str] = None
 
+class UtilizationResponse(BaseModel):
+    id: int
+    year: int
+    quarter: int
+    funds_utilized: float
+    cumulative_utilized: float
+    percentage: float
+    notes: Optional[str]
+
+class GlobalFundsSet(BaseModel):
+    total_funds_released: float
+
 class UtilizationUpdate(BaseModel):
-    percentage: Optional[float] = None
-    resources_used: Optional[str] = None
+    funds_released: Optional[float] = None
+    funds_utilized: Optional[float] = None
     notes: Optional[str] = None
 
 class PlanCreate(BaseModel):
@@ -54,3 +66,17 @@ class PlanResponse(PlanCreate):
 
     class Config:
         from_attributes = True
+
+class PlanUpdate(BaseModel):
+    name: Optional[str] = None
+    reference_no: Optional[str] = None
+    category: Optional[str] = None
+    amount_usd: Optional[float] = None
+    method: Optional[str] = None
+    wing: Optional[str] = None
+    planned_start: Optional[date] = None
+    planned_end: Optional[date] = None
+
+
+class GlobalFundsSet(BaseModel):
+    total_funds_released: float

@@ -4,6 +4,8 @@ from datetime import datetime
 
 Base = declarative_base()
 
+
+
 class ProcurementActivity(Base):
     __tablename__ = "procurement_activities"
     id = Column(Integer, primary_key=True, index=True)
@@ -46,13 +48,23 @@ class AuditLog(Base):
     new_values = Column(JSON, nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
 
+class GlobalSetting(Base):
+    __tablename__ = "global_settings"
+    id = Column(Integer, primary_key=True, index=True)
+    key = Column(String, unique=True, nullable=False)
+    value = Column(String, nullable=False)   # store JSON or numeric as string
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+
 class Utilization(Base):
     __tablename__ = "utilization"
     id = Column(Integer, primary_key=True, index=True)
     year = Column(Integer, nullable=False)
     quarter = Column(Integer, nullable=False)  # 1,2,3,4
-    percentage = Column(Numeric(5,2), nullable=False)  # e.g., 85.50
-    resources_used = Column(String, nullable=True)    # optional description
+    #resources_used = Column(String, nullable=True)    # optional description
+    #funds_released = Column(Numeric(12,2), nullable=False)   # total funds available this quarter
+    funds_utilized = Column(Numeric(12,2), nullable=False)
     notes = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 

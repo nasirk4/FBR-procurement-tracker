@@ -7,13 +7,27 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
     <style>
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .tab-btn.active { border-bottom: 4px solid #0f766e; color: #0f766e; font-weight: 600; }
         .modal { transition: all 0.2s ease; }
         .card-hover { transition: transform 0.2s; }
         .card-hover:hover { transform: translateY(-2px); }
+        
+        /* Professional tab styling */
+        .tab-btn {
+            color: #475569; /* slate-600 */
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .tab-btn.active {
+            color: #0f766e; /* teal-700 */
+            border-bottom-color: #0f766e;
+            background-color: #f0fdfa; /* teal-50 */
+            font-weight: 600;
+        }
     </style>
 </head>
 <body class="bg-slate-50">
@@ -33,52 +47,176 @@
             </div>
         </div>
 
-        <!-- Tabs -->
-        <div class="bg-white border-b sticky top-0 z-50">
-            <div class="flex px-8 text-sm overflow-x-auto">
-                <button onclick="switchTab(0)" class="tab-btn active px-8 py-4">Dashboard</button>
-                <button onclick="switchTab(1)" class="tab-btn px-8 py-4">Activities</button>
-                <button onclick="switchTab(2)" class="tab-btn px-8 py-4">Deliverables</button>
-                <button onclick="switchTab(3)" class="tab-btn px-8 py-4">Utilization</button>
-                <button onclick="switchTab(4)" class="tab-btn px-8 py-4">Plans</button>
-                <button onclick="switchTab(5)" class="tab-btn px-8 py-4">Reports</button>
+        <!-- Tabs (Professional Layout) -->
+        <div class="bg-white/90 backdrop-blur-sm sticky top-0 z-50 shadow-sm border-b border-slate-200">
+            <div class="flex px-8 text-sm gap-1 overflow-x-auto">
+                <button onclick="switchTab(0)" class="tab-btn group flex items-center gap-2 px-5 py-3 rounded-t-xl font-medium transition-all duration-200 hover:bg-teal-50">
+                    <i class="fa-solid fa-chart-pie text-slate-400 group-hover:text-teal-600 transition-colors"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button onclick="switchTab(1)" class="tab-btn group flex items-center gap-2 px-5 py-3 rounded-t-xl font-medium transition-all duration-200 hover:bg-teal-50">
+                    <i class="fa-solid fa-clipboard-list text-slate-400 group-hover:text-teal-600 transition-colors"></i>
+                    <span>Activities</span>
+                </button>
+                <button onclick="switchTab(2)" class="tab-btn group flex items-center gap-2 px-5 py-3 rounded-t-xl font-medium transition-all duration-200 hover:bg-teal-50">
+                    <i class="fa-solid fa-tasks text-slate-400 group-hover:text-teal-600 transition-colors"></i>
+                    <span>Deliverables</span>
+                </button>
+                <button onclick="switchTab(3)" class="tab-btn group flex items-center gap-2 px-5 py-3 rounded-t-xl font-medium transition-all duration-200 hover:bg-teal-50">
+                    <i class="fa-solid fa-chart-line text-slate-400 group-hover:text-teal-600 transition-colors"></i>
+                    <span>Utilization</span>
+                </button>
+                <button onclick="switchTab(4)" class="tab-btn group flex items-center gap-2 px-5 py-3 rounded-t-xl font-medium transition-all duration-200 hover:bg-teal-50">
+                    <i class="fa-solid fa-calendar-alt text-slate-400 group-hover:text-teal-600 transition-colors"></i>
+                    <span>Plans</span>
+                </button>
+                <button onclick="switchTab(5)" class="tab-btn group flex items-center gap-2 px-5 py-3 rounded-t-xl font-medium transition-all duration-200 hover:bg-teal-50">
+                    <i class="fa-solid fa-file-alt text-slate-400 group-hover:text-teal-600 transition-colors"></i>
+                    <span>Reports</span>
+                </button>
             </div>
         </div>
 
-        <!-- ==================== DASHBOARD TAB ==================== -->
+        <!-- ==================== DASHBOARD TAB (Professional Layout) ==================== -->
         <div id="tab-0" class="tab-content active p-8">
-            <h2 class="text-2xl font-semibold mb-6">Dashboard Overview</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-6 mb-8">
-                <div class="bg-white p-5 rounded-2xl shadow card-hover">
-                    <p class="text-slate-500 text-sm">Total Activities</p>
-                    <p class="text-2xl font-bold text-teal-700 mt-2" id="total-activities">--</p>
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-800">Dashboard</h2>
+                <p class="text-slate-500 mt-1">Key performance indicators and procurement metrics</p>
+            </div>
+
+            <!-- First row: Core metrics -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <!-- Total Activities -->
+                <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-500 text-sm font-medium uppercase tracking-wider">Total Activities</p>
+                                <p class="text-4xl font-extrabold text-teal-700 mt-2" id="total-activities">--</p>
+                            </div>
+                            <div class="bg-teal-100 rounded-full p-3">
+                                <i class="fa-solid fa-clipboard-list text-teal-700 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs text-slate-400">Active procurement items</div>
+                    </div>
                 </div>
-                <div class="bg-white p-5 rounded-2xl shadow card-hover">
-                    <p class="text-slate-500 text-sm">Deliverables</p>
-                    <p class="text-2xl font-bold text-amber-600 mt-2" id="total-deliverables">--</p>
+
+                <!-- Deliverables -->
+                <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-500 text-sm font-medium uppercase tracking-wider">Deliverables</p>
+                                <p class="text-4xl font-extrabold text-amber-600 mt-2" id="total-deliverables">--</p>
+                            </div>
+                            <div class="bg-amber-100 rounded-full p-3">
+                                <i class="fa-solid fa-tasks text-amber-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs text-slate-400">Total contract deliverables</div>
+                    </div>
                 </div>
-                <div class="bg-white p-5 rounded-2xl shadow card-hover">
-                    <p class="text-slate-500 text-sm">Due in 30 Days</p>
-                    <p class="text-2xl font-bold text-red-600 mt-2" id="deliverables-due">--</p>
+
+                <!-- Due in 30 Days -->
+                <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-500 text-sm font-medium uppercase tracking-wider">Due in 30 Days</p>
+                                <p class="text-4xl font-extrabold text-red-600 mt-2" id="deliverables-due">--</p>
+                            </div>
+                            <div class="bg-red-100 rounded-full p-3">
+                                <i class="fa-solid fa-calendar-exclamation text-red-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs text-slate-400">Upcoming deadlines</div>
+                    </div>
                 </div>
-                <div class="bg-white p-5 rounded-2xl shadow card-hover">
-                    <p class="text-slate-500 text-sm">Under Procurement (USD)</p>
-                    <p class="text-2xl font-bold text-blue-600 mt-2" id="under-procurement">--</p>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow card-hover">
-                    <p class="text-slate-500 text-sm">Signed Contract Value (USD)</p>
-                    <p class="text-2xl font-bold text-emerald-600 mt-2" id="contract-value">--</p>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow card-hover">
-                    <p class="text-slate-500 text-sm">Pipeline Activities</p>
-                    <p class="text-2xl font-bold text-purple-600 mt-2" id="pipeline-activities">--</p>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow card-hover">
-                    <p class="text-slate-500 text-sm">Consultants Engaged</p>
-                    <p class="text-2xl font-bold text-orange-600 mt-2" id="consultants-engaged">--</p>
+
+                <!-- Pipeline Activities -->
+                <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-500 text-sm font-medium uppercase tracking-wider">Pipeline Activities</p>
+                                <p class="text-4xl font-extrabold text-purple-600 mt-2" id="pipeline-activities">--</p>
+                            </div>
+                            <div class="bg-purple-100 rounded-full p-3">
+                                <i class="fa-solid fa-chart-line text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-xs text-slate-400">In planning & procurement</div>
+                    </div>
                 </div>
             </div>
-            <!-- Optional: add recent activities list here later -->
+
+            <!-- Second row: Financial & consultant metrics -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Under Procurement (USD) -->
+                <div class="bg-gradient-to-br from-blue-50 to-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-blue-100">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-blue-700 text-sm font-medium uppercase tracking-wider">Under Procurement</p>
+                                <p class="text-3xl font-extrabold text-blue-800 mt-2" id="under-procurement">$--</p>
+                            </div>
+                            <div class="bg-blue-200 rounded-full p-3">
+                                <i class="fa-solid fa-cart-shopping text-blue-800 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-xs text-blue-600">Estimated cost (not yet contracted)</div>
+                    </div>
+                </div>
+
+                <!-- Signed Contract Value (USD) -->
+                <div class="bg-gradient-to-br from-emerald-50 to-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-emerald-100">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-emerald-700 text-sm font-medium uppercase tracking-wider">Signed Contract Value</p>
+                                <p class="text-3xl font-extrabold text-emerald-800 mt-2" id="contract-value">$--</p>
+                            </div>
+                            <div class="bg-emerald-200 rounded-full p-3">
+                                <i class="fa-solid fa-file-signature text-emerald-800 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-xs text-emerald-600">Total awarded contracts</div>
+                    </div>
+                </div>
+
+                <!-- Consultants Engaged -->
+                <div class="bg-gradient-to-br from-orange-50 to-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-orange-100">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-orange-700 text-sm font-medium uppercase tracking-wider">Consultants Engaged</p>
+                                <p class="text-3xl font-extrabold text-orange-800 mt-2" id="consultants-engaged">--</p>
+                            </div>
+                            <div class="bg-orange-200 rounded-full p-3">
+                                <i class="fa-solid fa-user-tie text-orange-800 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-xs text-orange-600">Individual consultants hired</div>
+                    </div>
+                </div>
+
+                <!-- Avg. Cycle Time (static placeholder – can be dynamic later) -->
+                <div class="bg-gradient-to-br from-slate-50 to-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-slate-200">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-600 text-sm font-medium uppercase tracking-wider">Avg. Cycle Time</p>
+                                <p class="text-3xl font-extrabold text-slate-700 mt-2">87 <span class="text-base font-normal">days</span></p>
+                            </div>
+                            <div class="bg-slate-200 rounded-full p-3">
+                                <i class="fa-regular fa-clock text-slate-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-xs text-slate-500">NOL → Contract Signing</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- ==================== ACTIVITIES TAB ==================== -->
@@ -135,31 +273,55 @@
         <!-- ==================== UTILIZATION TAB ==================== -->
         <div id="tab-3" class="tab-content hidden p-8">
             <h2 class="text-2xl font-semibold mb-6">Quarterly Utilization</h2>
+
+            <!-- Global Funds Released Card -->
+            <div class="bg-white p-6 rounded-3xl shadow mb-6">
+                <h3 class="font-bold mb-4">Total Funds Released (Global Reference)</h3>
+                <div class="flex gap-4 items-end">
+                    <div class="flex-1">
+                        <label class="block text-sm text-slate-600 mb-1">Total Released Amount (USD)</label>
+                        <input type="number" id="global-funds" step="0.01" class="w-full border rounded-lg p-2">
+                    </div>
+                    <button onclick="saveGlobalFunds()" class="bg-teal-700 text-white px-5 py-2 rounded-lg mb-0.5">Save</button>
+                </div>
+                <p class="text-xs text-slate-400 mt-2">This value is used to calculate the overall utilization percentage and the horizontal line on the chart.</p>
+            </div>
+
+            <!-- Add / Edit Quarterly Data -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-3xl shadow">
-                    <h3 class="font-bold mb-4">Add / Edit Utilization</h3>
+                    <h3 class="font-bold mb-4">Add Quarterly Utilization</h3>
                     <form id="utilization-form">
                         <div class="grid grid-cols-2 gap-3 mb-3">
-                            <input type="number" id="util-year" placeholder="Year" class="border rounded p-2">
-                            <select id="util-quarter" class="border rounded p-2">
+                            <input type="number" id="util-year" placeholder="Year" required class="border rounded p-2">
+                            <select id="util-quarter" required class="border rounded p-2">
                                 <option value="1">Q1</option><option value="2">Q2</option><option value="3">Q3</option><option value="4">Q4</option>
                             </select>
                         </div>
-                        <input type="number" id="util-percent" step="0.1" placeholder="Utilization %" class="border rounded p-2 w-full mb-3">
-                        <input type="text" id="util-resources" placeholder="Resources used (optional)" class="border rounded p-2 w-full mb-3">
-                        <textarea id="util-notes" rows="2" placeholder="Notes" class="border rounded p-2 w-full mb-3"></textarea>
+                        <input type="number" id="util-utilized" step="0.01" placeholder="Funds Utilized this quarter (USD)" required class="border rounded p-2 w-full mb-3">
+                        <textarea id="util-notes" rows="2" placeholder="Notes (optional)" class="border rounded p-2 w-full mb-3"></textarea>
                         <button type="submit" class="bg-teal-700 text-white px-4 py-2 rounded-xl w-full">Save Quarter</button>
                     </form>
                 </div>
                 <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow">
-                    <h3 class="font-bold mb-4">Utilization Trend</h3>
-                    <canvas id="utilChart" height="200"></canvas>
+                    <h3 class="font-bold mb-4">Utilization Trends</h3>
+                    <canvas id="utilChart" height="250"></canvas>
                 </div>
             </div>
-            <div class="mt-8 bg-white rounded-3xl shadow overflow-hidden">
+
+            <!-- Table -->
+            <div class="mt-8 bg-white rounded-3xl shadow overflow-x-auto">
                 <table class="w-full">
                     <thead class="bg-slate-100">
-                        <tr><th>Year</th><th>Quarter</th><th>Utilization %</th><th>Resources</th><th>Notes</th><th>Actions</th></tr>
+                        <tr>
+                            <th class="px-4 py-3 text-left">Year</th>
+                            <th class="px-4 py-3 text-left">Quarter</th>
+                            <th class="px-4 py-3 text-right">Utilized (USD)</th>
+                            <th class="px-4 py-3 text-right">Cumulative (USD)</th>
+                            <th class="px-4 py-3 text-right">Utilization %</th>
+                            <th class="px-4 py-3">Notes</th>
+                            <th class="px-4 py-3">Actions</th>
+                        </tr>
                     </thead>
                     <tbody id="utilization-body"></tbody>
                 </table>
@@ -344,6 +506,78 @@
         </div>
     </div>
 
+    <!-- Edit Plan Modal -->
+    <div id="editPlanModal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-4xl w-full p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-slate-800">Edit Procurement Activity</h3>
+                <button onclick="closeEditPlanModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form id="edit-plan-form">
+                <input type="hidden" id="edit-plan-id">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold mb-1">Activity Description / Item Name</label>
+                        <input type="text" id="edit-plan-name" required class="w-full border rounded-lg p-2.5">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">STEP ID / Ref No.</label>
+                        <input type="text" id="edit-plan-ref" class="w-full border rounded-lg p-2.5">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Category</label>
+                        <select id="edit-plan-category" class="w-full border rounded-lg p-2.5 bg-white">
+                            <option value="Goods">Goods</option>
+                            <option value="Consulting Firm">Consulting Firm</option>
+                            <option value="Individual Consultant">Individual Consultant</option>
+                            <option value="Non-Consulting">Non-Consulting</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Est. Amount (USD)</label>
+                        <input type="number" id="edit-plan-amount" step="0.01" class="w-full border rounded-lg p-2.5">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Procurement Method</label>
+                        <select id="edit-plan-method" class="w-full border rounded-lg p-2.5 bg-white">
+                            <option value="RFB">RFB</option>
+                            <option value="QCBS">QCBS</option>
+                            <option value="CDS">CDS</option>
+                            <option value="Individual">Individual</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Concerned Wing</label>
+                        <select id="edit-plan-wing" class="w-full border rounded-lg p-2.5 bg-white">
+                            <option value="IT">IT Wing</option>
+                            <option value="Customs">Customs</option>
+                            <option value="IR">Inland Revenue</option>
+                            <option value="Program Office">Program Office</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Start Date</label>
+                            <input type="date" id="edit-plan-start" class="w-full border rounded-lg p-2.5">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">End Date</label>
+                            <input type="date" id="edit-plan-end" class="w-full border rounded-lg p-2.5">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-3 pt-6 border-t mt-6">
+                    <button type="button" onclick="closeEditPlanModal()" class="px-6 py-2.5 border rounded-lg">Cancel</button>
+                    <button type="submit" class="px-6 py-2.5 bg-teal-700 text-white rounded-lg">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ==================== SCRIPT ==================== -->
     <script>
         // ---------- Helper ----------
@@ -450,32 +684,145 @@
             } catch(e) { console.error(e); }
         }
 
+        // ---------- Global Funds ----------
+        async function loadGlobalFunds() {
+            try {
+                const res = await fetchJSON('/api/settings/total_funds_released');
+                document.getElementById('global-funds').value = res.total_funds_released || '';
+            } catch(e) { console.error(e); }
+        }
+
+        window.saveGlobalFunds = async function() {
+            const total = parseFloat(document.getElementById('global-funds').value);
+            if (isNaN(total)) return alert('Enter a valid amount');
+            try {
+                await fetchJSON('/api/settings/total_funds_released', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ total_funds_released: total })
+                });
+                alert('Global funds released saved');
+                loadUtilization();   // refresh chart and table
+            } catch(err) { alert('Error: ' + err.message); }
+        };
+
         // ---------- Utilization ----------
         let utilChart = null;
+
         async function loadUtilization() {
             try {
                 const data = await fetchJSON('/api/utilization');
                 const tbody = document.getElementById('utilization-body');
                 tbody.innerHTML = '';
+
+                // Prepare datasets
+                const labels = [];
+                const quarterlyUtilized = [];
+                const cumulativeUtilized = [];
+                const percentages = [];
+
                 data.forEach(u => {
+                    labels.push(`${u.year} Q${u.quarter}`);
+                    quarterlyUtilized.push(u.funds_utilized);
+                    cumulativeUtilized.push(u.cumulative_utilized);
+                    percentages.push(u.percentage);
+
+                    // Add row to table
                     const row = tbody.insertRow();
                     row.innerHTML = `
                         <td class="px-4 py-2">${u.year}</td>
                         <td class="px-4 py-2">Q${u.quarter}</td>
-                        <td class="px-4 py-2">${u.percentage}%</td>
-                        <td class="px-4 py-2">${u.resources_used || '-'}</td>
-                        <td class="px-4 py-2">${u.notes || '-'}</td>
+                        <td class="px-4 py-2 text-right">$${u.funds_utilized.toLocaleString()}</td>
+                        <td class="px-4 py-2 text-right">$${u.cumulative_utilized.toLocaleString()}</td>
+                        <td class="px-4 py-2 text-right font-bold ${u.percentage < 50 ? 'text-red-600' : 'text-emerald-600'}">${u.percentage}%</td>
+                        <td class="px-4 py-2">${escapeHtml(u.notes || '')}</td>
                         <td class="px-4 py-2"><button onclick="deleteUtil(${u.id})" class="text-red-500"><i class="fas fa-trash"></i></button></td>
                     `;
                 });
-                const labels = data.map(u => `${u.year} Q${u.quarter}`);
-                const values = data.map(u => u.percentage);
+
+                // Get global funds released (for horizontal line)
+                let globalReleased = 0;
+                try {
+                    const globalRes = await fetchJSON('/api/settings/total_funds_released');
+                    globalReleased = globalRes.total_funds_released || 0;
+                } catch(e) {}
+
+                // Destroy old chart
                 if (utilChart) utilChart.destroy();
                 const ctx = document.getElementById('utilChart').getContext('2d');
+
                 utilChart = new Chart(ctx, {
                     type: 'line',
-                    data: { labels, datasets: [{ label: 'Utilization %', data: values, borderColor: '#0f766e', tension: 0.3 }] },
-                    options: { responsive: true, maintainAspectRatio: true }
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Quarterly Utilized (USD)',
+                                data: quarterlyUtilized,
+                                borderColor: '#f59e0b',
+                                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                                yAxisID: 'y-amount',
+                                fill: false,
+                                tension: 0.3,
+                                pointRadius: 4,
+                                pointBackgroundColor: '#f59e0b'
+                            },
+                            {
+                                label: 'Cumulative Utilized (USD)',
+                                data: cumulativeUtilized,
+                                borderColor: '#3b82f6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.05)',
+                                yAxisID: 'y-amount',
+                                fill: false,
+                                tension: 0.1,
+                                pointRadius: 4,
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'Global Funds Released (USD)',
+                                data: Array(labels.length).fill(globalReleased),
+                                borderColor: '#ef4444',
+                                borderWidth: 2,
+                                borderDash: [5, 5],
+                                yAxisID: 'y-amount',
+                                fill: false,
+                                pointRadius: 0,
+                                tension: 0
+                            },
+                            {
+                                label: 'Utilization %',
+                                data: percentages,
+                                borderColor: '#0f766e',
+                                backgroundColor: 'rgba(15, 118, 110, 0.1)',
+                                yAxisID: 'y-percentage',
+                                fill: false,
+                                tension: 0.3,
+                                pointRadius: 4,
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        interaction: { mode: 'index', intersect: false },
+                        scales: {
+                            'y-amount': {
+                                type: 'linear',
+                                position: 'left',
+                                title: { display: true, text: 'Amount (USD)' },
+                                grid: { drawOnChartArea: true }
+                            },
+                            'y-percentage': {
+                                type: 'linear',
+                                position: 'right',
+                                title: { display: true, text: 'Utilization (%)' },
+                                min: 0,
+                                max: 100,
+                                grid: { drawOnChartArea: false }
+                            }
+                        }
+                    }
                 });
             } catch(e) { console.error(e); }
         }
@@ -485,6 +832,39 @@
             await fetch(`/api/utilization/${id}`, { method: 'DELETE' });
             loadUtilization();
         }
+
+        // Form submission handler (only quarterly utilized)
+        document.getElementById('utilization-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                year: parseInt(document.getElementById('util-year').value),
+                quarter: parseInt(document.getElementById('util-quarter').value),
+                funds_utilized: parseFloat(document.getElementById('util-utilized').value) || 0,
+                notes: document.getElementById('util-notes').value || null
+            };
+            try {
+                await fetchJSON('/api/utilization', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                e.target.reset();
+                loadUtilization();
+            } catch(err) { alert('Error: ' + err.message); }
+        });
+
+        // Form submission handler (replaces the old one)
+        document.getElementById('utilization-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                year: parseInt(document.getElementById('util-year').value),
+                quarter: parseInt(document.getElementById('util-quarter').value),
+                funds_released: parseFloat(document.getElementById('util-released').value) || 0,
+                funds_utilized: parseFloat(document.getElementById('util-utilized').value) || 0,
+                notes: document.getElementById('util-notes').value || null
+            };
+            try {
+                await fetchJSON('/api/utilization', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                e.target.reset();
+                loadUtilization();  // refreshes table and chart
+            } catch(err) { alert('Error: ' + err.message); }
+        });
 
         // ---------- Plans ----------
         async function loadPlans() {
@@ -508,7 +888,8 @@
                         <td class="px-6 py-4 text-right font-semibold text-emerald-700">$${(p.amount_usd || 0).toLocaleString()}</td>
                         <td class="px-6 py-4 text-sm text-slate-500">${p.planned_start || '—'} → ${p.planned_end || '—'}</td>
                         <td class="px-6 py-4">
-                            <button class="text-teal-600 hover:text-teal-800"><i class="fa-solid fa-eye"></i></button>
+                            <button onclick="editPlan(${p.id})" class="text-teal-600 hover:text-teal-800 mr-3"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="deletePlan(${p.id})" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     `;
                     tbody.appendChild(row);
@@ -627,7 +1008,75 @@
                 loadUtilization();
             } catch(err) { alert('Error: ' + err.message); }
         });
+        // ---------- Edit & Delete Plans ----------
+        let currentEditPlanId = null;
 
+        window.editPlan = async function(id) {
+            currentEditPlanId = id;
+            try {
+                const plan = await fetchJSON(`/api/plans/${id}`);
+                document.getElementById('edit-plan-id').value = plan.id;
+                document.getElementById('edit-plan-name').value = plan.name || '';
+                document.getElementById('edit-plan-ref').value = plan.reference_no || '';
+                document.getElementById('edit-plan-category').value = plan.category || 'Goods';
+                document.getElementById('edit-plan-amount').value = plan.amount_usd || '';
+                document.getElementById('edit-plan-method').value = plan.method || 'RFB';
+                document.getElementById('edit-plan-wing').value = plan.wing || 'Program Office';
+                document.getElementById('edit-plan-start').value = plan.planned_start || '';
+                document.getElementById('edit-plan-end').value = plan.planned_end || '';
+                document.getElementById('editPlanModal').classList.remove('hidden');
+            } catch(err) {
+                alert('Error loading plan: ' + err.message);
+            }
+        };
+
+        window.closeEditPlanModal = function() {
+            document.getElementById('editPlanModal').classList.add('hidden');
+            currentEditPlanId = null;
+        };
+
+        // Submit edit form
+        document.getElementById('edit-plan-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('edit-plan-id').value;
+            const payload = {
+                name: document.getElementById('edit-plan-name').value.trim(),
+                reference_no: document.getElementById('edit-plan-ref').value.trim() || null,
+                category: document.getElementById('edit-plan-category').value,
+                amount_usd: parseFloat(document.getElementById('edit-plan-amount').value) || null,
+                method: document.getElementById('edit-plan-method').value,
+                wing: document.getElementById('edit-plan-wing').value,
+                planned_start: document.getElementById('edit-plan-start').value || null,
+                planned_end: document.getElementById('edit-plan-end').value || null
+            };
+            try {
+                await fetchJSON(`/api/plans/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                alert('Plan updated');
+                closeEditPlanModal();
+                loadPlans(); // refresh table
+            } catch(err) {
+                alert('Error: ' + err.message);
+            }
+        });
+
+        window.deletePlan = async function(id) {
+            if (!confirm('Are you sure you want to delete this plan?')) return;
+            try {
+                await fetchJSON(`/api/plans/${id}`, { method: 'DELETE' });
+                loadPlans();
+            } catch(err) {
+                alert('Error: ' + err.message);
+            }
+        };
+
+        // Export function placeholder (you can implement CSV later)
+        window.exportPlan = function() {
+            alert('Export to CSV will be available soon');
+        };
         // ---------- Tab Switching ----------
         async function switchTab(n) {
             document.querySelectorAll('.tab-content').forEach(el => {
@@ -641,7 +1090,10 @@
             if (n === 0) await loadDashboard();
             if (n === 1) await loadActivities();
             if (n === 2) await loadDeliverables();
-            if (n === 3) await loadUtilization();
+            if (n === 3) {
+                await loadGlobalFunds();
+                await loadUtilization();
+            }
             if (n === 4) await loadPlans();
         }
 
